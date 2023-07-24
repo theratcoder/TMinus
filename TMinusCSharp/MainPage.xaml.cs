@@ -33,6 +33,9 @@ namespace TMinusCSharp {
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
+            // enure this is cleared
+            titleTxt.Text = "";
+
             if (e.Parameter is int) {
                 int id = (int)e.Parameter;
 
@@ -129,7 +132,7 @@ namespace TMinusCSharp {
                     }
                 }
             }
-            
+
             base.OnNavigatedTo(e);
         }
 

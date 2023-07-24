@@ -142,10 +142,34 @@ namespace TMinusCSharp
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
+        private async void OnSuspending(object sender, SuspendingEventArgs e) {
+            try {
+                // clear any files that do not have associated countdowns
+                StorageFolder folder = await ApplicationData.Current.LocalFolder.GetFolderAsync("countdowns");
+
+                foreach (Windows.Storage.StorageFile file in await folder.GetFilesAsync()) {
+                    int fileId;
+                    if (!int.TryParse(Path.GetFileNameWithoutExtension(file.Path), out fileId)) {
+                        // clear any files that don't conform to the naming scheme ({file id}.ctdn)
+                        await file.DeleteAsync();
+                        continue;
+                    }
+
+                    bool found = false;
+                    foreach (Countdown countdown in Countdown.countdowns.Values) {
+                        if (fileId == countdown.fileId) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        await file.DeleteAsync();
+                    }
+                }
+            }
+            catch (FileNotFoundException) { } // folder doesn't exist so don't bother
+
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
     }
