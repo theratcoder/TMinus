@@ -33,7 +33,7 @@ namespace TMinusCSharp {
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
-            // enure this is cleared
+            // ensure this is cleared
             titleTxt.Text = "";
 
             if (e.Parameter is int) {

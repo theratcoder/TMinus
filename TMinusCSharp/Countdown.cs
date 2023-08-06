@@ -26,6 +26,10 @@ namespace TMinusCSharp {
 
         public int fileId;
 
+        // should be called when the countdown has been modified
+        public delegate void OnUpdate();
+        public OnUpdate updated;
+
         public delegate void OnDelete();
         public OnDelete delete;
 

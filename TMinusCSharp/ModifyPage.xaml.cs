@@ -46,6 +46,7 @@ namespace TMinusCSharp {
 
                 Frame.Navigate(typeof(CountdownItem), id);
 
+                Countdown.countdowns[id].updated();
                 Countdown.countdowns[id].save();
             }
             else {

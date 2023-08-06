@@ -72,6 +72,10 @@ namespace TMinusCSharp {
                         }
                     };
 
+                    countdown.updated += delegate {
+                        countdown.window.Title = countdown.title;
+                    };
+
                     Frame.Navigate(typeof(MainPage), countdown.id);
 
                     countdown.save();

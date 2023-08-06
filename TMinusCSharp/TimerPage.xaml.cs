@@ -67,6 +67,11 @@ namespace TMinusCSharp {
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             countdown = e.Parameter as Countdown;
 
+            countdown.updated += delegate {
+                titleTxt.Text = countdown.title;
+                CDTxt.Text = countdown.displayRemaining();
+            };
+
             titleTxt.Text = countdown.title;
             CDTxt.Text = countdown.displayRemaining();
 
